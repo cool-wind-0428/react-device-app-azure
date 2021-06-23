@@ -1,56 +1,36 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - rocket-at-iot(AM)
-
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    types: [created]
+
+env:
+  AZURE_WEBAPP_NAME: Rocket-AT-IOT    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'build'      # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '10.x'                # set this to the node version to use
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    environment: production
     steps:
     - uses: actions/checkout@v2
-
-    - name: Set up Node.js version
-      uses: actions/setup-node@v1
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
       with:
-        node-version: '14.x'
-
+        node-version: ${{ env.NODE_VERSION }}
     - name: npm install, build, and test
       run: |
+        # Build and test the project, then
+        # deploy to Azure Web App.
         npm install
         npm run build --if-present
         npm run test --if-present
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v2
-      with:
-        name: node-app
-        path: .
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'AM'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: node-app
-
-    - name: 'Deploy to Azure Web App'
-      id: deploy-to-webapp
+    - name: add process.json
+      run: |
+        echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
+    - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'rocket-at-iot'
-        slot-name: 'AM'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0c510e261138484392dc7dbf59c1130f }}
-        package: .
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
