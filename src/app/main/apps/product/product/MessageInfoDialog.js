@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
