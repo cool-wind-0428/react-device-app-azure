@@ -1,3 +1,4 @@
+/* eslint-disable */
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FuseChipSelect from '@fuse/core/FuseChipSelect';
 import FuseLoading from '@fuse/core/FuseLoading';
