@@ -48,9 +48,6 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: node-app
-    - name: add process.json
-      run: |
-        echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
