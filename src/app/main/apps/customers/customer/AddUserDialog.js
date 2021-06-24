@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useForm } from '@fuse/hooks';
 import FuseUtils from '@fuse/utils/FuseUtils';
 import AppBar from '@material-ui/core/AppBar';
@@ -50,7 +51,6 @@ function AddUserDialog() {
 	const devices = useSelector(selectProducts); 
 	const [lists, setLists] = useState(sourceAdminLists);
 	const [labelMenuEl, setLabelMenuEl] = useState(null);
-	console.log('========================', devices)
 	useEffect(() => {
 		if (authUser.role[0] === 'service man') {
 			setLists(sourceLists);
