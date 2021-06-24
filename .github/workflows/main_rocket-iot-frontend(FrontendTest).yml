@@ -8,6 +8,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+  
+env:
+  AZURE_WEBAPP_NAME: FrontendTest (rocket-iot-frontend/FrontendTest)    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'build'      # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '10.x'                # set this to the node version to use
 
 jobs:
   build:
@@ -45,7 +50,9 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: node-app
-
+    - name: add process.json
+      run: |
+        echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
