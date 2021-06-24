@@ -10,7 +10,7 @@ public/
 .vscode/
 
 #all
-src/
+src/*
 # external docs
 src/app/main/documentation/material-ui-components/components/*
 src/app/main/documentation/material-ui-components/pages/*
