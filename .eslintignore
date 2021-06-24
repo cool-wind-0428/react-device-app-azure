@@ -9,6 +9,8 @@ public/
 # ide
 .vscode/
 
+#all
+src/
 # external docs
 src/app/main/documentation/material-ui-components/components/*
 src/app/main/documentation/material-ui-components/pages/*
