@@ -1,4 +1,4 @@
-export const deployEndpoint = 'https://rocket-app-front.netlify.app';
+export const deployEndpoint = 'https://rocket-iot-frontend-frontendtest.azurewebsites.net';
 // export const deployEndpoint = 'http://localhost:3000';
 
 // export const API_URL = 'https://react-device-app-backend.herokuapp.com';
